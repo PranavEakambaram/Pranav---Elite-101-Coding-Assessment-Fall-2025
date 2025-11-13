@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 # TODO: Create a function to view all books that are currently available
 # Output should include book ID, title, and author
 
-def print_books()
+def print_books():
      for i in library_books:
         print(f"Book ID: {i["id"]}\nTitle: {i["title"]}\nAuthor: {i["author"]}")
 
@@ -13,6 +13,10 @@ def print_books()
 # TODO: Create a function to search books by author OR genre
 # Search should be case-insensitive
 # Return a list of matching books
+
+def find_book():
+    user_input = input("Enter an author or a genre")
+
 
 
 # -------- Level 3 --------
