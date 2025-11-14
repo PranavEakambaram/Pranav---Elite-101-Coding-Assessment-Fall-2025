@@ -23,9 +23,9 @@ def find_book():
     user_input = input("Enter an author or a genre")
     matching_books = []
     for i in library_books:
-        if user_input.lower() == i['author'].lower():             #compares with everything lowercase to disregard case-sensitive
+        if user_input.strip().lower() == i['author'].lower():             #compares with everything lowercase to disregard case-sensitive
             matching_books.append(i)
-        if user_input.lower() == i['genre'].lower():                #checks for genre as well as author
+        if user_input.strip().lower() == i['genre'].lower():                #checks for genre as well as author
             matching_books.append(i)                        #appends all matches to empty list
     
     if len(matching_books) > 0:
@@ -91,7 +91,7 @@ def check_overdue_books():
     overdue_books = []      #list to store overdue books
     overdue_found = False       # flag 
     for book in library_books:
-        if book['available'] == False and book['due_date'] is not None and datetime.strptime(book['due_date'], "%x") < datetime.today():     # checks for due date being set to None to avoid error with datetime class functions
+        if book['available'] == False and book['due_date'] is not None and datetime.strptime(book['due_date'], "%x") < datetime.today():     # checks for due date being set to None to avoid error with datetime class functions--- Used the following webstie to learn how to test for if due date is past today (https://www.geeksforgeeks.org/python/python-convert-string-to-datetime-and-vice-versa)
             overdue_found = True                        #adjusts flag when a book is overdue
             overdue_books.append(book)
     for book in overdue_books:
@@ -112,6 +112,11 @@ def check_overdue_books():
 # - Save/load catalog to file (CSV or JSON)
 # - Anything else you want to build on top of the system!
 
-if __name__ == "__main__":
-    # You can use this space to test your functions
-    pass
+
+
+# You can use this space to test your functions
+print("testing available books")
+print_available_books()
+print("\n\n\n")
+
+find_book()
