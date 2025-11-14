@@ -23,10 +23,8 @@ def find_book():
     user_input = input("Enter an author or a genre")
     matching_books = []
     for i in library_books:
-        if user_input.strip().lower() == i['author'].lower():             #compares with everything lowercase to disregard case-sensitive
+        if user_input.strip().lower() == i['author'].lower() or user_input.strip().lower() == i['genre'].lower():            #compares with everything lowercase to disregard case-sensitive
             matching_books.append(i)
-        if user_input.strip().lower() == i['genre'].lower():                #checks for genre as well as author
-            matching_books.append(i)                        #appends all matches to empty list
     
     if len(matching_books) > 0:
         for i in matching_books:
@@ -48,14 +46,14 @@ def find_book():
 #   - Print a message saying it's already checked out
 
 def checkout_book():
-    book_id = input("Enter the ID of the book you would like to checkout.")
+    book_id = input("Enter the ID of the book you would like to checkout.").strip()
     id_found = False                            #flag to take care of wrong ID input
     for book in library_books:
         if book['id'] == book_id:
             id_found = True                     #if book found, set the flag variable to True
             if book['available'] == True:
                 book['available'] = False
-                book['due_date'] = (datetime.today() + timedelta(days=14)).strftime("%x") #used w3schools (https://www.w3schools.com/python/python_datetime.asp) and AI to understand the datetime class. 
+                book['due_date'] = (datetime.today() + timedelta(days=14)).strftime("%Y-%m-%d") #used w3schools (https://www.w3schools.com/python/python_datetime.asp) and AI to understand the datetime class. 
                 book['checkouts'] += 1
                 print(f"You checked out {book['title']}. Please return it by {book['due_date']}")
             else:
@@ -69,7 +67,7 @@ def checkout_book():
 # Set its availability to True and clear the due_date
 
 def return_book_by_id():
-    return_id = input("Please enter the ID of the book you would like to return")
+    return_id = input("Please enter the ID of the book you would like to return.").strip()
     id_found = False                #flag for wrong ID input
 
     for book in library_books:
@@ -82,7 +80,7 @@ def return_book_by_id():
             else:
                 print("This book is currently available")          #if the book was already set to available
     if id_found == False:                                   #check flag to ensure the book id was entered properly
-        print("No book with ID: '" + book_id + "' exists.")
+        print("No book with ID: '" + return_id + "' exists.")
 
 
 # TODO: Create a function to list all overdue books
@@ -92,7 +90,7 @@ def check_overdue_books():
     overdue_books = []      #list to store overdue books
     overdue_found = False       # flag 
     for book in library_books:
-        if book['available'] == False and book['due_date'] is not None and datetime.strptime(book['due_date'], "%x") < datetime.today():     # checks for due date being set to None to avoid error with datetime class functions--- Used the following webstie to learn how to test for if due date is past today (https://www.geeksforgeeks.org/python/python-convert-string-to-datetime-and-vice-versa)
+        if book['available'] == False and book['due_date'] is not None and datetime.strptime(book['due_date'], "%Y-%m-%d") < datetime.today():     # checks for due date being set to None to avoid error with datetime class functions--- Used the following webstie to learn how to test for if due date is past today (https://www.geeksforgeeks.org/python/python-convert-string-to-datetime-and-vice-versa)
             overdue_found = True                        #adjusts flag when a book is overdue
             overdue_books.append(book)
     for book in overdue_books:
@@ -116,6 +114,5 @@ def check_overdue_books():
 
 
 # You can use this space to test your functions
-checkout_book()
-print()
-checkout_book()
+if __name__=="__main__":
+    pass
