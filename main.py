@@ -5,9 +5,14 @@ from datetime import datetime, timedelta
 # TODO: Create a function to view all books that are currently available
 # Output should include book ID, title, and author
 
-def print_books():
-     for i in library_books:
-        print(f"Book ID: {i["id"]}\nTitle: {i["title"]}\nAuthor: {i["author"]}")
+def print_available_books():
+    available = False                          #flag to take care of extreme case of no books available
+    for i in library_books:
+        if i['available'] == True:
+            available = True                    #if atleast one book available, set available to true
+            print(f"Book ID: {i['id']}\nTitle: {i['title']}\nAuthor: {i['author']}\n")
+    if available == False:                        #case for if available equals false/ no books available
+        print ("No books are available.\n")      
 
 # -------- Level 2 --------
 # TODO: Create a function to search books by author OR genre
@@ -18,13 +23,16 @@ def find_book():
     user_input = input("Enter an author or a genre")
     matching_books = []
     for i in library_books:
-        if user_input.lower() == i["author"].lower():
+        if user_input.lower() == i['author'].lower():             #compares with everything lowercase to disregard case-sensitive
             matching_books.append(i)
-        if user_input.lower() == i["genre"].lower():
-            matching_books.apend(i)
+        if user_input.lower() == i['genre'].lower():                #checks for genre as well as author
+            matching_books.append(i)                        #appends all matches to empty list
     
-    for i in matching_books:
-        print(f"Book ID: {i["id"]}\nTitle: {i["title"]}\nAuthor: {i["author"]}\nGenre: {i["genre"]}\nAvailable: {i["available"]}")
+    if len(matching_books) > 0:
+        for i in matching_books:
+            print(f"Book ID: {i['id']}\nTitle: {i['title']}\nAuthor: {i['author']}\nGenre: {i['genre']}\nAvailable: {i['available']}")   #prints all info of books in matching list
+    else:                       # takes care of no matches in the user's search
+        print("No matches found.")
 
     
 
