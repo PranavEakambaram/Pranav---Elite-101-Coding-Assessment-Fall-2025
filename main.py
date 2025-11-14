@@ -49,23 +49,40 @@ def find_book():
 
 def checkout_book():
     book_id = input("Enter the ID of the book you would like to checkout.")
-    id_found = False
+    id_found = False                            #flag to take care of wrong ID input
     for book in library_books:
         if book['id'] == book_id:
-            id_found = True
+            id_found = True                     #if book found, set the flag variable to True
             if book['available'] == True:
                 book['available'] = False
-                #SET DUE DATE
+                book['due_date'] = (datetime.today() + timedelta(days=14)).strftime("%x") #used w3schools (https://www.w3schools.com/python/python_datetime.asp) and AI to understand the datetime class. 
                 book['checkouts'] += 1
             else:
-                print("This book has currently been checked out. It will return on " + i[due_date])
-    if id_found == False:
+                print("This book has currently been checked out. It will return on " + book['due_date'])     #prints a checked out message with return date
+    if id_found == False:                                       #if flag stayed false, no book was found
         print("No book with ID: '" + book_id + "' exists.")
 
 
 # -------- Level 4 --------
 # TODO: Create a function to return a book by ID
 # Set its availability to True and clear the due_date
+
+def return_book_by_id():
+    return_id = input("Please enter the ID of the book you would like to return")
+    id_found = False                #flag for wrong ID input
+
+    for book in library_books:
+        if book['id'] == return_id:
+            id_found = True                     #if book found, set flag to true
+            if book['available'] == False:
+                book['available'] = True
+                book ["due_date"] = None
+                print("You returned book " + return_id)
+            else:
+                print("This book is currently available")
+    if id_found == False:
+        print("No book with ID: '" + book_id + "' exists.")
+
 
 # TODO: Create a function to list all overdue books
 # A book is overdue if its due_date is before today AND it is still checked out
