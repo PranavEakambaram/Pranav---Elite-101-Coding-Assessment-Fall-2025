@@ -47,6 +47,21 @@ def find_book():
 # If it is not available:
 #   - Print a message saying it's already checked out
 
+def checkout_book():
+    book_id = input("Enter the ID of the book you would like to checkout.")
+    id_found = False
+    for book in library_books:
+        if book['id'] == book_id:
+            id_found = True
+            if book['available'] == True:
+                book['available'] = False
+                #SET DUE DATE
+                book['checkouts'] += 1
+            else:
+                print("This book has currently been checked out. It will return on " + i[due_date])
+    if id_found == False:
+        print("No book with ID: '" + book_id + "' exists.")
+
 
 # -------- Level 4 --------
 # TODO: Create a function to return a book by ID
