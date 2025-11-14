@@ -57,6 +57,7 @@ def checkout_book():
                 book['available'] = False
                 book['due_date'] = (datetime.today() + timedelta(days=14)).strftime("%x") #used w3schools (https://www.w3schools.com/python/python_datetime.asp) and AI to understand the datetime class. 
                 book['checkouts'] += 1
+                print(f"You checked out {book['title']}. Please return it by {book['due_date']}")
             else:
                 print("This book has currently been checked out. It will return on " + book['due_date'])     #prints a checked out message with return date
     if id_found == False:                                       #if flag stayed false, no book was found
@@ -115,8 +116,6 @@ def check_overdue_books():
 
 
 # You can use this space to test your functions
-print("testing available books")
-print_available_books()
-print("\n\n\n")
-
-find_book()
+checkout_book()
+print()
+checkout_book()
